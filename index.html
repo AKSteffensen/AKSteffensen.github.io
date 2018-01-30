@@ -1,7 +1,41 @@
 <!DOCTYPE html>
-<html>
-<body>
-<h1>HELLO BABBA!</h1> 
-<p>HOW U FEEL TODAY?</p>
-</body>
+<html lang="en", style="font-size: 24pt; font-style: sans-serif; font-weight: bold;>
+	<head>
+		<meta charset="utf-8">
+		<title>D3 Page Template</title>
+		<script type="text/javascript" src="d3.js"></script>
+	</head>
+	<body> 
+		<script type="text/javascript">
+
+			var dataset = [ 5, 10, 15, 20, 25 ];
+			d3.select("body").selectAll("p")
+				.data(dataset)
+				.enter()
+				.append("p")
+				.text(function(d) {
+					return "I can count up to " + d;
+				})
+				.style("color",function(d) {
+					if (d > 15) {
+						return "red";
+					}
+					else {
+						return "black";
+					}
+				});
+
+		</script> 
+
+		<svg width="280" height="140">
+			<rect x="0" y="60" width="80" height="80" stroke="gray" stroke-width="2" opacity="1" fill="purple"/>
+			<rect x="50" y="45" width="80" height="80" stroke="gray" stroke-width="2" opacity="0.8" fill="blue"/>
+			<rect x="100" y="30" width="80" height="80" stroke="gray" stroke-width="2" opacity="0.6" fill="green"/>
+			<rect x="150" y="15" width="80" height="80" stroke="gray" stroke-width="2" opacity="0.4" fill="yellow"/>
+			<rect x="200" y="0" width="80" height="80" stroke="gray" stroke-width="2" opacity="0.2" fill="red"/>
+		</svg>
+
+	</body>
 </html>
+
+
