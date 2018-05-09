@@ -231,7 +231,7 @@ var color = d3.scaleThreshold().range(["rgb(247,251,255)", "rgb(222,235,247)", "
                                       .style("opacity", 0.7) ;
                     }
       //-----------------------------add name of boroughs------------------------------
-      d3.csv("Data/cities.csv", function(error, data) {
+      d3.csv("data/cities.csv", function(error, data) {
          svgmap.selectAll("text")
                .append("g")
                .data(data)
