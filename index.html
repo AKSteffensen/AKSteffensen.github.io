@@ -1,41 +1,282 @@
 <!DOCTYPE html>
-<html lang="en", style="font-size: 24pt; font-style: sans-serif; font-weight: bold;>
+<html lang="en">
 	<head>
+		<!-- Theme Made By www.w3schools.com - No Copyright -->
+		<title>02806 Social Data Analysis and Visualization</title>
 		<meta charset="utf-8">
-		<title>AKSteffensen JavaScript Practice</title>
-		<script type="text/javascript" src="D3/d3.js"></script>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<script src="https://d3js.org/d3.v4.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+		<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+		<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<style>
+		body {
+			font: 400 15px Lato, sans-serif;
+			line-height: 1.8;
+			color: #818181;
+		}
+		h2 {
+			font-size: 24px;
+			text-transform: uppercase;
+			color: #303030;
+			font-weight: 600;
+			margin-bottom: 30px;
+		}
+		h4 {
+			font-size: 19px;
+			line-height: 1.375em;
+			color: #303030;
+			font-weight: 400;
+			margin-bottom: 30px;
+		}	
+		.jumbotron {
+			background-color: #bc3d1a;
+			color: #fff;
+			padding: 100px 25px;
+			font-family: Montserrat, sans-serif;
+		}
+		.container-fluid {
+			padding: 60px 50px;
+		}
+		.bg-grey {
+			background-color: #f6f6f6;
+		}
+		.panel {
+			border: 1px solid #f4511e; 
+			border-radius:0 !important;
+			transition: box-shadow 0.5s;
+		}
+		.panel:hover {
+			box-shadow: 5px 0px 40px rgba(0,0,0, .2);
+		}
+		.panel-footer .btn:hover {
+			border: 1px solid #f4511e;
+			background-color: #fff !important;
+			color: #f4511e;
+		}
+		.panel-heading {
+			color: #fff !important;
+			background-color: #f4511e !important;
+			padding: 25px;
+			border-bottom: 1px solid transparent;
+			border-top-left-radius: 0px;
+			border-top-right-radius: 0px;
+			border-bottom-left-radius: 0px;
+			border-bottom-right-radius: 0px;
+		}
+		.panel-footer {
+			background-color: white !important;
+		}
+		.panel-footer h3 {
+			font-size: 32px;
+		}
+		.panel-footer h4 {
+			color: #aaa;
+			font-size: 14px;
+		}
+		.panel-footer .btn {
+			margin: 15px 0;
+			background-color: #f4511e;
+			color: #fff;
+		}
+		.navbar {
+			margin-bottom: 0;
+			background-color: #bc3d1a;
+			z-index: 9999;
+			border: 0;
+			font-size: 12px !important;
+			line-height: 1.42857143 !important;
+			letter-spacing: 4px;
+			border-radius: 0;
+			font-family: Montserrat, sans-serif;
+		}
+		.navbar li a, .navbar .navbar-brand {
+			color: #fff !important;
+		}
+		.navbar-nav li a:hover, .navbar-nav li.active a {
+			color: #bc3d1a !important;
+			background-color: #fff !important;
+		}
+		.navbar-default .navbar-toggle {
+			border-color: transparent;
+			color: #fff !important;
+		}
+		footer .glyphicon {
+			font-size: 20px;
+			margin-bottom: 20px;
+			color: #bc3d1a;
+		}
+		.slideanim {visibility:hidden;}
+		.slide {
+			animation-name: slide;
+			-webkit-animation-name: slide;
+			animation-duration: 1s;
+			-webkit-animation-duration: 1s;
+			visibility: visible;
+		}
+		@keyframes slide {
+		0% {
+			opacity: 0;
+			transform: translateY(70%);
+		} 
+		100% {
+			opacity: 1;
+			transform: translateY(0%);
+		}
+		}
+		@-webkit-keyframes slide {
+		0% {
+			opacity: 0;
+			-webkit-transform: translateY(70%);
+		} 
+		100% {
+			opacity: 1;
+			-webkit-transform: translateY(0%);
+		}
+		}
+		@media screen and (max-width: 768px) {
+		.col-sm-4 {
+			text-align: center;
+			margin: 25px 0;
+		}
+		.btn-lg {
+			width: 100%;
+			margin-bottom: 35px;
+		}
+		}
+		#tooltip {
+			position: absolute;
+			width: 150px;
+			height: auto;
+			padding: 5px;
+			background-color: white;
+			-webkit-border-radius: 10px;
+			-moz-border-radius: 10px;
+			border-radius: 10px;
+			-webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+			-moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+			box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+			pointer-events: none;
+			z-index: 1;
+		}
+		#tooltip.hidden {
+			visibility: hidden;
+		}
+		#tooltip p {
+			margin: 0;
+			font-family: sans-serif;
+			font-size: 14px;
+		}
+		path.hidden,circle.hidden,line.hidden {
+			display: none;
+		}
+		</style>
 	</head>
-	<body> 
-		<script type="text/javascript">
+	<body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
+		<nav class="navbar navbar-default navbar-fixed-top">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>												
+					</button>
+					<a class="navbar-brand" href="#myPage"></a>
+				</div>
+				<div class="collapse navbar-collapse" id="myNavbar">
+					<ul class="nav navbar-nav navbar-right">
+					<li><a href="#part1">Intro</a></li>
+					<li><a href="#part2">Timeline</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
 
-			var dataset = [ 5, 10, 15, 20, 25 ];
-			d3.select("body").selectAll("p")
-				.data(dataset)
-				.enter()
-				.append("p")
-				.text(function(d) {
-					return "I can count up to " + d;
-				})
-				.style("color",function(d) {
-					if (d > 15) {
-						return "red";
-					}
-					else {
-						return "black";
-					}
-				});
+		<div class="jumbotron text-center">
+			<h1 style="font-size: 32px;">02806 - Social Data Analysis and Visualization</h1> 
+			<h2 style="color: white;">Neighborhood complaints in New York City</h2> 
+		</div>
 
-		</script> 
+		<!-- Container (Part 1 Section) -->
+		<div id="part1" class="container-fluid">
+			<div class="row">
 
-		<svg width="280" height="140">
-			<rect x="0" y="60" width="80" height="80" stroke="gray" stroke-width="2" opacity="1" fill="purple"/>
-			<rect x="50" y="45" width="80" height="80" stroke="gray" stroke-width="2" opacity="0.8" fill="blue"/>
-			<rect x="100" y="30" width="80" height="80" stroke="gray" stroke-width="2" opacity="0.6" fill="green"/>
-			<rect x="150" y="15" width="80" height="80" stroke="gray" stroke-width="2" opacity="0.4" fill="yellow"/>
-			<rect x="200" y="0" width="80" height="80" stroke="gray" stroke-width="2" opacity="0.2" fill="red"/>
-		</svg>
+			<div class="col-sm-6">
+					<h2>Introduction</h2><br>
+					
+						<strong>Write an introduction mofo</strong>
+						
+				</div>
 
-	</body>
+
+				<div class="col-sm-6">
+					<div id="barplot">
+						<div class="dropdown">
+							<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Categories<span class="caret"></span></button>
+							<ul class="dropdown-menu" id="button_pl1">
+								<li class="active" style="color: white"><a id="Incidents">Incidents</a></li>
+								<li><a id="Normalized">Normalized</a></li>
+							</ul>
+						</div>
+						<!-- <div id="tooltip" class="hidden">
+							<p>Year: <span id="year">0</span></p>
+							<p>Time: <span id="time">0</span></p>
+						</div> -->
+					</div>
+				</div>
+
+			</div>
+		</div>
+		
+		<!-- Container (Part 2 Section) -->
+		<div id="part2" class="container-fluid bg-grey">
+			<div class="row">
+				<div class="col-sm-6">
+
+					<div id= "animate">
+		            <input name= "aniButton"
+		            type="button"
+		            value="Animate"
+		            style= "width:90px; height:40px; color:steelblue;
+		                   background:aliceblue; font-weight:900;
+		                   border-color:whitesmoke; border-radius:6px;
+		                   position:relative;top:50%;left:47%;margin-top:14px;bottom:0"
+		            />
+
+		            </div>
+
+		            <div id="brushplot">
+				        <!-- <script type=text/javascript src="http://d3js.org/topojson.v0.min.js"></script> -->
+				        <!-- <script type="text/javascript" src="js/brush.js"></script> -->
+			        </div>
+
+				</div>
+
+				<div class="col-sm-6">
+					<h2>Part 2: Vizualizing incidents in 2015 over time</h2><br>
+					<strong> The data illustrated in Figure 1 is a random sample of the data obtained <a href="https://data.cityofnewyork.us/Social-Services/311-Service-Requests-2015/hemm-82xw">here</a>. The data contains service requests for various incidents for inhabitants in New York. The bar chart in Figure 1 depicts the number of service requests per day in 2015 based on the sample. The map illustrates where the request have been called in.
+
+					 </strong>
+					</div>
+				
+			</div>
+		</div>
+
+		<!-- Container (Footer Section) -->
+		<footer class="container-fluid text-center">
+			<a href="#myPage" title="To Top">
+			<span class="glyphicon glyphicon-chevron-up"></span>
+			</a>
+			<p>Scroll to the top of the page</p>
+		</footer>
+
+
+<!-- PLOTS -->
+<script src="js/barplot.js"></script>
+<script src="js/brushplot.js"></script>
+
+</body>
 </html>
-
-
