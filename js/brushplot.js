@@ -39,9 +39,9 @@ var color = d3.scaleThreshold().range(["rgb(247,251,255)", "rgb(222,235,247)", "
 
 
              // Load in my states data!
-                d3.csv("Data/complaint_sample2.csv", function(data) {
+                d3.csv("data/complaint_sample2.csv", function(data) {
                    //----------draw histogram------------
-                   d3.json("Data/boroughs.geojson", function(json) {
+                   d3.json("data/boroughs.geojson", function(json) {
 
                     //map
                     // Bind the data to the SVG and create one path per GeoJSON feature
