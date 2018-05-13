@@ -1,3 +1,5 @@
+// population found at https://www.citypopulation.de/php/usa-newyorkcity.php
+
 function addToBar(bar,data,prop,propScale,xScale,w,h,padding,color) {
         		// axis
             	var yAxis = d3.axisLeft().scale(propScale).ticks(5);
@@ -6,7 +8,13 @@ function addToBar(bar,data,prop,propScale,xScale,w,h,padding,color) {
                 bar.select(".y.axis").transition().duration(1000).call(yAxis);
 
         		// add bars to plot
-                bar.selectAll("rect").data(data).transition().duration(1000).attr("x",function(d,i) { return xScale(i); }).attr("y",function(d) { return propScale(d[prop]); }).attr("width",xScale.bandwidth()).attr("height",function(d) { return h-propScale(d[prop])-padding; }).attr("fill",function(d) { return color; });
+                bar.selectAll("rect").data(data)
+                .transition().duration(1000)
+                .attr("x",function(d,i) { return xScale(i); })
+                .attr("y",function(d) { return propScale(d[prop]); })
+                .attr("width",xScale.bandwidth())
+                .attr("height",function(d) { return h-propScale(d[prop])-padding; })
+                .attr("fill",function(d) { return color; });
         	}
 
         	// settings for window
@@ -16,6 +24,8 @@ function addToBar(bar,data,prop,propScale,xScale,w,h,padding,color) {
 
         	// create window for plot
             var bar = d3.select("#barplot").append("svg").attr("width",w).attr("height",h);
+
+            var tooltip = d3.select("body").append("div").attr("class", "toolTip");
 
             // load data
             d3.csv("data/incidents.csv",function(error,dataset) {
@@ -37,13 +47,38 @@ function addToBar(bar,data,prop,propScale,xScale,w,h,padding,color) {
             	var xAxis = d3.axisBottom().scale(xScale).tickValues(d3.range(dataset.length)).tickFormat(function(d,i) { return dataset[i].Borough;})
             	var yAxis = d3.axisLeft().scale(IScale).ticks(5);
 
+                // var tip = d3.tip()
+                //   .attr('class', 'd3-tip')
+                //   .offset([-10, 0])
+                //   .html(function(d) {
+                //     return "<strong>Frequency:</strong> <span style='color:red'>" + d.frequency + "</span>";
+                //   })
+
             	// add axis labels and title
 				bar.append("text").attr("x",(w/2)-padding).attr("y",0+(padding/2)).attr("text-anchor","middle").style("font-size","16px").style("text-decoration", "underline").text("NYC Complaint Incidents");
 				bar.append("text").attr("x",w/2-padding).attr("y",h).style("text-anchor","middle").text("Borough");
 				bar.append("text").attr("x",-(h/2)).attr("y",0).attr("transform","rotate(-90)").attr("dy","1em").style("text-anchor","middle").text("Number of Incidents");
 
             	// add bars to plot
-                bar.selectAll("rect").data(dataset).enter().append("rect").attr("x",function(d,i) { return xScale(i); }).attr("y",function(d) { return IScale(d.Incidents); }).attr("width",xScale.bandwidth()).attr("height",function(d) { return h-IScale(d.Incidents)-padding; }).attr("fill",function(d) { return 'red'; });
+                bar.selectAll("rect").data(dataset)
+                .enter().append("rect")
+                .attr("x",function(d,i) { return xScale(i); })
+                .attr("y",function(d) { return IScale(d.Incidents); })
+                .attr("width",xScale.bandwidth())
+                .attr("height",function(d) { return h-IScale(d.Incidents)-padding; })
+                .attr("fill",function(d) { return 'red'; })
+                .on("mouseover", function(d){
+                tooltip
+                  .style("left", d3.event.pageX - 80 + "px")
+                  .style("top", d3.event.pageY - 150 + "px")
+                  .style("display", "inline-block")
+                  .html("Borough: " + (d.Borough) + "<br>" +
+                        "Incidents: " + (d.Incidents) + "<br>" +
+                        "Normalized Incidents: " + (d.Incidents_Norm) + "<br>" +
+                        "Population: " + (d.Population));
+            })
+              .on("mouseout", function(d){ tooltip.style("display", "none");
+          });                
 
                 // add axis to plot
             	bar.append("g").attr("class","x axis").attr("transform","translate(0,"+(h-padding)+")").call(xAxis);

@@ -9,9 +9,9 @@ var margin_map = {top: 0, right: 0, bottom: 0, left: 0},
     width_map = 600 - margin_map.left - margin_map.right,
     height_map = 500 - margin_map.top - margin_map.bottom;
 
-var margin_newbar = {top: 0, right: 0, bottom: 0, left: 0},
-    width_newbar = 600 - margin_newbar.left - margin_newbar.right,
-    height_newbar = 500 - margin_newbar.top - margin_newbar.bottom;
+// var margin_newbar = {top: 0, right: 0, bottom: 0, left: 0},
+//     width_newbar = 600 - margin_newbar.left - margin_newbar.right,
+//     height_newbar = 500 - margin_newbar.top - margin_newbar.bottom;
 
 var svgchart = d3.select("#brushplot")
                 .append("svg")
@@ -25,12 +25,12 @@ var svgmap = d3.select("#brushplot").append("svg")
               .attr("width", width_map)
               .attr("height", height_map);
 
-var svgbar = d3.select("#brushplot")
-                .append("svg")
-                .attr("width", width_newbar + margin_newbar.left + margin_newbar.right)
-                .attr("height", height_newbar + margin_newbar.top + margin_newbar.bottom)
-                //.append("g")
-                .attr("transform", "translate(" + margin_newbar.left + "," + margin_newbar.top + ")");
+// var svgbar = d3.select("#brushplot")
+//                 .append("svg")
+//                 .attr("width", width_newbar + margin_newbar.left + margin_newbar.right)
+//                 .attr("height", height_newbar + margin_newbar.top + margin_newbar.bottom)
+//                 //.append("g")
+//                 .attr("transform", "translate(" + margin_newbar.left + "," + margin_newbar.top + ")");
 
 var projection = d3.geoMercator().scale(45000).translate([width_map /2, height_map/2]).center([-74.0, 40.7]);
 var path = d3.geoPath().projection(projection);
@@ -39,9 +39,9 @@ var color = d3.scaleThreshold().range(["rgb(247,251,255)", "rgb(222,235,247)", "
 
 
              // Load in my states data!
-                d3.csv("data/complaint_sample2.csv", function(data) {
+                d3.csv("Data/complaint_sample2.csv", function(data) {
                    //----------draw histogram------------
-                   d3.json("data/boroughs.geojson", function(json) {
+                   d3.json("Data/boroughs.geojson", function(json) {
 
                     //map
                     // Bind the data to the SVG and create one path per GeoJSON feature
@@ -231,7 +231,7 @@ var color = d3.scaleThreshold().range(["rgb(247,251,255)", "rgb(222,235,247)", "
                                       .style("opacity", 0.7) ;
                     }
       //-----------------------------add name of boroughs------------------------------
-      d3.csv("data/cities.csv", function(error, data) {
+      d3.csv("Data/cities.csv", function(error, data) {
          svgmap.selectAll("text")
                .append("g")
                .data(data)

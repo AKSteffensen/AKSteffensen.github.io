@@ -5,7 +5,8 @@
 		<title>02806 Social Data Analysis and Visualization</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<script src="https://d3js.org/d3.v4.js"></script>
+		<script type="text/javascript" src="d3.js"></script> 
+		<!-- <script src="https://d3js.org/d3.v4.js"></script> -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 		<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
@@ -14,7 +15,7 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<style>
 		body {
-			font: 400 15px Lato, sans-serif;
+			font: 400 17px Lato, sans-serif;
 			line-height: 1.8;
 			color: #818181;
 		}
@@ -147,7 +148,20 @@
 			margin-bottom: 35px;
 		}
 		}
-		#tooltip {
+
+		.toolTip {
+		  position: absolute;
+		  display: none;
+		  min-width: 80px;
+		  height: auto;
+		  background: none repeat scroll 0 0 #ffffff;
+		  border: 1px solid #6F257F;
+		  padding: 14px;
+		  text-align: center;
+		}
+
+
+/*		#tooltip {
 			position: absolute;
 			width: 150px;
 			height: auto;
@@ -170,7 +184,8 @@
 			font-family: sans-serif;
 			font-size: 14px;
 		}
-		path.hidden,circle.hidden,line.hidden {
+
+*/		path.hidden,circle.hidden,line.hidden {
 			display: none;
 		}
 		</style>
@@ -188,8 +203,11 @@
 				</div>
 				<div class="collapse navbar-collapse" id="myNavbar">
 					<ul class="nav navbar-nav navbar-right">
-					<li><a href="#part1">Intro</a></li>
-					<li><a href="#part2">Timeline</a></li>
+					<li><a href="#part1">Introduction</a></li>
+					<li><a href="#part2">Incidents</a></li>
+					<li><a href="#part3">Timeline</a></li>
+					<li><a href="#part4">Correlation</a></li>
+
 					</ul>
 				</div>
 			</div>
@@ -205,9 +223,32 @@
 			<div class="row">
 
 			<div class="col-sm-6">
-					<h2>Introduction</h2><br>
+					<h2>Introduction</h2>
 					
-						<strong>Write an introduction mofo</strong>
+						<strong>The purpose of this website is to introduce its readers to various forms of complaints given in New York City. It will be investigated where and when the complaints occour and what type the complaints are of. Knowledge and information about complaints are useful for people wanting to move or travel to New York when it is considered where to live, hence this will be the focus point of this webpage. </strong> 
+						
+				</div>
+
+
+				<div class="col-sm-6">
+					<h2>Data</h2>
+					
+						<strong>Multiple data sets will be used for examining the complaint incidents in New York City. The repository that contains all of the used datasets can be found <a href="https://github.com/AKSteffensen/AKSteffensen.github.io">here</a>, along with different <tt>R</tt>-scripts that are used for data preprocessing. <br> The dataset <tt>complaint_sample.csv </tt> is a random sample of the service request data found at <a href="https://data.cityofnewyork.us/Social-Services/311-Service-Requests-2015/hemm-82xw">NYC OpenData</a>. It has multiple variables such as <i> Descriptor </i> and <i> Complaint Type </i>. <br>
+						The dataset <tt>NYPD_complaints.csv</tt> found at <b>REF</b> contains information about about complaints to NYPD. The data is from 2017 and holds information about, among other things, the offense descriptions and their legal categories. </strong> 
+						
+				</div>
+
+			</div>
+		</div>
+		
+		<!-- Container (Part 2 Section) -->
+		<div id="part2" class="container-fluid bg-grey">
+			<div class="row">
+
+			<div class="col-sm-6">
+					<h2>Incidents in Numbers</h2>
+					
+						<strong>For starters, we examine the total amount of complaints in the five different boroughs without considering time and geographical place of the reported incident. To the right a barplot that shows the amount of complaints in each of the five boroughs. It is noted that there has been the highest number of complaint incidents in Brooklyn and Queens. This may however be due to a larger number of inhabitants in these boroughs. Therefore, the amount of complaint incidents has been normalized using the population numbers from 2016 found at <a href="https://www.citypopulation.de/php/usa-newyorkcity.php">City Population</a>. The normalization has been done by dividing the number of incidents with the population number in millions. Using the dropdown menu, the can be switched to displaying the normalized data. Additionally, the bars in the plots can be hovered to see all the informations at once. In the normalized data there does not seem to be a clear difference in the number of complaint incidents, hence further analysis is needed to draw any conclusions.  </strong> 
 						
 				</div>
 
@@ -230,9 +271,11 @@
 
 			</div>
 		</div>
-		
-		<!-- Container (Part 2 Section) -->
-		<div id="part2" class="container-fluid bg-grey">
+
+
+
+		<!-- Container (Part 3 Section) -->
+		<div id="part3" class="container-fluid">
 			<div class="row">
 				<div class="col-sm-6">
 
@@ -256,7 +299,7 @@
 				</div>
 
 				<div class="col-sm-6">
-					<h2>Part 2: Vizualizing incidents in 2015 over time</h2><br>
+					<h2>Part 2: Vizualizing incidents in 2015 over time</h2>
 					<strong> The data illustrated in Figure 1 is a random sample of the data obtained <a href="https://data.cityofnewyork.us/Social-Services/311-Service-Requests-2015/hemm-82xw">here</a>. The data contains service requests for various incidents for inhabitants in New York. The bar chart in Figure 1 depicts the number of service requests per day in 2015 based on the sample. The map illustrates where the request have been called in.
 
 					 </strong>
@@ -265,6 +308,27 @@
 			</div>
 		</div>
 
+		<div id='part4' class='container-fluid bg-grey'> 
+			<div class='row'> 
+				<div class='col-sm-6'> 
+					<h2>Correlation between Boroughs and Complaint Types</h2>
+					<strong> Instead of looking at the totalt amount of incidents, the different type of incidents could be examined further. Say for instance that a family wants to move to New York City but they are particularly scared of certain incidents such as assault or drug abuse. For that family it would be nice to know whether a certain borough has a smaller amount of incidents related to these categories than the other boroughs. The figure to the right illustrates the correlation between the boroughs, the incidence descriptions and the legal category. As the visualization illustrates, there does not seem to be any correlation between the boroughs and the description or the category of the reported incidents, hence we cannot solely examine the correlations between the boroughs and the incidence categories.   </strong>
+				</div>
+
+
+			<div class='row'> 
+				<div class='col-sm-6'> 
+					
+					<!-- Add whitespace to the left of embedded plot -->
+					&emsp; &emsp; &emsp;&emsp;&emsp; &emsp;&emsp;&emsp;&emsp;&emsp; <embed src="Borough_LawCat_Corr.pdf#view=FitH" width="700" height="700">
+
+				</div>
+
+			</div>
+
+		</div>
+	</div>
+				
 		<!-- Container (Footer Section) -->
 		<footer class="container-fluid text-center">
 			<a href="#myPage" title="To Top">
@@ -277,6 +341,7 @@
 <!-- PLOTS -->
 <script src="js/barplot.js"></script>
 <script src="js/brushplot.js"></script>
+
 
 </body>
 </html>
