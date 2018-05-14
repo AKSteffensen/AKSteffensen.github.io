@@ -47,15 +47,10 @@ function addToBar(bar,data,prop,propScale,xScale,w,h,padding,color) {
             	var xAxis = d3.axisBottom().scale(xScale).tickValues(d3.range(dataset.length)).tickFormat(function(d,i) { return dataset[i].Borough;})
             	var yAxis = d3.axisLeft().scale(IScale).ticks(5);
 
-                // var tip = d3.tip()
-                //   .attr('class', 'd3-tip')
-                //   .offset([-10, 0])
-                //   .html(function(d) {
-                //     return "<strong>Frequency:</strong> <span style='color:red'>" + d.frequency + "</span>";
-                //   })
+          
 
             	// add axis labels and title
-				bar.append("text").attr("x",(w/2)-padding).attr("y",0+(padding/2)).attr("text-anchor","middle").style("font-size","16px").style("text-decoration", "underline").text("NYC Complaint Incidents");
+				bar.append("text").attr("x",(w/2)-padding).attr("y",0+(padding/2)).attr("text-anchor","middle").style("font-size","16px").style("text-decoration", "underline").text("NYC Service Requests - 2015");
 				bar.append("text").attr("x",w/2-padding).attr("y",h).style("text-anchor","middle").text("Borough");
 				bar.append("text").attr("x",-(h/2)).attr("y",0).attr("transform","rotate(-90)").attr("dy","1em").style("text-anchor","middle").text("Number of Incidents");
 

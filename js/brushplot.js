@@ -9,10 +9,6 @@ var margin_map = {top: 0, right: 0, bottom: 0, left: 0},
     width_map = 700 - margin_map.left - margin_map.right,
     height_map = 500 - margin_map.top - margin_map.bottom;
 
-// var margin_newbar = {top: 0, right: 0, bottom: 0, left: 0},
-//     width_newbar = 600 - margin_newbar.left - margin_newbar.right,
-//     height_newbar = 500 - margin_newbar.top - margin_newbar.bottom;
-
 var svgchart = d3.select("#brushplot")
                 .append("svg")
                 .attr("width", width_chart + margin_chart.left + margin_chart.right)
@@ -24,13 +20,6 @@ var svgchart = d3.select("#brushplot")
 var svgmap = d3.select("#brushplot").append("svg")
               .attr("width", width_map)
               .attr("height", height_map);
-
-// var svgbar = d3.select("#brushplot")
-//                 .append("svg")
-//                 .attr("width", width_newbar + margin_newbar.left + margin_newbar.right)
-//                 .attr("height", height_newbar + margin_newbar.top + margin_newbar.bottom)
-//                 //.append("g")
-//                 .attr("transform", "translate(" + margin_newbar.left + "," + margin_newbar.top + ")");
 
 var projection = d3.geoMercator().scale(45000).translate([width_map /2, height_map/2]).center([-74.0, 40.7]);
 var path = d3.geoPath().projection(projection);
@@ -111,7 +100,7 @@ var color = d3.scaleThreshold().range(["rgb(247,251,255)", "rgb(222,235,247)", "
                       //console.log(brushedData);
                       drawCircle();
 
-      //make an array for nest data
+                      //make an array for nest data
                       var nestBar = d3.nest()
                                   .key(function(d) {return d.Time})
                                   .rollup(function (v) {return v.length})
@@ -182,34 +171,6 @@ var color = d3.scaleThreshold().range(["rgb(247,251,255)", "rgb(222,235,247)", "
                         .attr("transform", "translate(" + (width_chart / 2) + "," + (height_chart + margin_chart.bottom) + ")")
                         .text("Year");
 
-
-                  //map
-                  // Bind the data to the SVG and create one path per GeoJSON feature
-                        // svgmap.selectAll("path")
-                        //   .data(json.features)
-                        //   .enter()
-                        //   .append("path")
-                        //   .attr("d", path)
-                        //   .style("stroke", "#fff")
-                        //   .style("stroke-width", "1")
-                        //   .style("fill", function(d) {
-                        //       // Get data value
-                        //       var value = d.properties.BoroName;
-
-                        //       if (value == "Staten Island") {
-                        //         return "rgb(107,174,214)";
-                        //       } else if (value == "Bronx") {
-                        //         return "rgb(213,222,217)";
-                        //       } else if (value == "Manhattan"){
-                        //         return "rgb(222,235,247)";
-                        //       }else if (value == "Brooklyn"){
-                        //         return "rgb(198,219,239)";
-                        //       }else if (value == "Queens"){
-                        //         return "rgb(158,202,225)";
-                        //       }
-                        //     });
-
-
                     function drawCircle(){
                       //remove all circle first
                       svgmap.selectAll("circle").remove();
@@ -255,10 +216,6 @@ var color = d3.scaleThreshold().range(["rgb(247,251,255)", "rgb(222,235,247)", "
 
              });
 
-            svgmap.append("text")
-		    .attr("transform", "translate(" + (width_map / 5) + "," + (height_map + margin_map.bottom-5) + ")")
-		    .text("Figure 1: Illustration of incidents in each borough in New York in 2015.");
-
       //-----------------------------end add name of boroughs------------------------------
       //-------------------------animation---------------------------------------------------------
 
@@ -267,8 +224,6 @@ var color = d3.scaleThreshold().range(["rgb(247,251,255)", "rgb(222,235,247)", "
                       //do something on click
 
                         //Update all rects
-      //                   svgchart.select("g").remove();
-      //                   svgchart.append("g")
                          svgchart.select("g")
                          .transition()
                          .duration(500)
@@ -346,9 +301,7 @@ var color = d3.scaleThreshold().range(["rgb(247,251,255)", "rgb(222,235,247)", "
 
 
                                  ;
-      //-------------------------end animation---------------------------------------------------------
-
-                          // .ease(d3.easeLinear);
+                         
 
 
 

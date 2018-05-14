@@ -161,30 +161,6 @@
 		}
 
 
-/*		#tooltip {
-			position: absolute;
-			width: 150px;
-			height: auto;
-			padding: 5px;
-			background-color: white;
-			-webkit-border-radius: 10px;
-			-moz-border-radius: 10px;
-			border-radius: 10px;
-			-webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
-			-moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
-			box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
-			pointer-events: none;
-			z-index: 1;
-		}
-		#tooltip.hidden {
-			visibility: hidden;
-		}
-		#tooltip p {
-			margin: 0;
-			font-family: sans-serif;
-			font-size: 14px;
-		}
-
 */		path.hidden,circle.hidden,line.hidden {
 			display: none;
 		}
@@ -203,9 +179,10 @@
 				</div>
 				<div class="collapse navbar-collapse" id="myNavbar">
 					<ul class="nav navbar-nav navbar-right">
-					<li><a href="#part1">Introduction</a></li>
-					<li><a href="#part2">Incidents</a></li>
-					<li><a href="#part3">Timeline</a></li>
+					<li><a href="#intro">Introduction</a></li>
+					<li><a href="#part1">Service Requests</a></li>
+					<li><a href="#part2">Timeline</a></li>
+					<li><a href="#part3">NYPD Complaints</a></li>
 					<li><a href="#part4">Correlation</a></li>
 
 					</ul>
@@ -219,36 +196,45 @@
 		</div>
 
 		<!-- Container (Part 1 Section) -->
-		<div id="part1" class="container-fluid">
+		<div id="intro" class="container-fluid">
 			<div class="row">
 
 			<div class="col-sm-6">
 					<h2>Introduction</h2>
 					
-						<strong>The purpose of this website is to introduce its readers to various forms of complaints given in New York City. It will be investigated where and when the complaints occour and what type the complaints are of. Knowledge and information about complaints are useful for people wanting to move or travel to New York when it is considered where to live, hence this will be the focus point of this webpage. </strong> 
+						<strong>The purpose of this website is to introduce its readers to various forms of service requests and complaints given in New York City. It will be investigated where and when the requests and complaints occour and what type they are of. As we are planning a trip to New York City we find it interesting to have a good overview of where it is nice to stay. First we consider service requests to get knowledge of where and when the fewest incidents and service requests occur. Then we consider NYPD complaints to get information of where it is safest to stay in the city. <br>Furthermore knowledge and information about complaints are useful for other people wanting to move or travel to New York when it is considered where to live, hence this will be the focus point of this webpage. <br>
+
+						All code, data and the associated explainer page can be found in our GitHub repository <a href='https://github.com/AKSteffensen/AKSteffensen.github.io'>here</a>.
+						</strong> 
+
+
 						
 				</div>
 
 
-				<div class="col-sm-6">
-					<h2>Data</h2>
+			<div class="col-sm-6">
+				<h2>Data</h2>
+				
+					<strong>Two main datasets will be used for examining the complaint incidents in New York City. The raw datasets originate from <a href="https://data.cityofnewyork.us">NYC OpenData</a>. <br>
+					The first dataset contains information about service requests from citicens to some given agency in New York City in 2015. Different types of agencies are the <i> New York Police Department (NYPD) </i>, the <i> Department of Transportation </i> or the <i>Taxi and Limousine Commissision</i>. The data contains ~ 1.7 million observations and 39 variables. Due to the dataset being very large and for illustration purposes, a random sample of 2,431 observations with no missing values has been generated in <tt>R</tt>. The raw dataset can be found <a href="https://data.cityofnewyork.us/Social-Services/311-Service-Requests-2015/hemm-82xw">here</a>. <br>
 					
-						<strong>Multiple data sets will be used for examining the complaint incidents in New York City. The repository that contains all of the used datasets can be found <a href="https://github.com/AKSteffensen/AKSteffensen.github.io">here</a>, along with different <tt>R</tt>-scripts that are used for data preprocessing. <br> The dataset <tt>complaint_sample.csv </tt> is a random sample of the service request data found at <a href="https://data.cityofnewyork.us/Social-Services/311-Service-Requests-2015/hemm-82xw">NYC OpenData</a>. It has multiple variables such as <i> Descriptor </i> and <i> Complaint Type </i>. <br>
-						The dataset <tt>NYPD_complaints.csv</tt> found at <b>REF</b> contains information about about complaints to NYPD. The data is from 2017 and holds information about, among other things, the offense descriptions and their legal categories. </strong> 
-						
-				</div>
+					The second dataset contains information about complaints from citizens to the NYPD from 1967 to 2017 in New York City. The three major complaint types are <i>Felony</i>, <i>Misdemeanor</i> and <i>Violation</i>. The dataset contains ~ 470,000 observations and 24 variables. The raw dataset can be found <a href="https://data.cityofnewyork.us/Public-Safety/NYPD-Complaint-Map-Year-to-Date-/2fra-mtpn">here</a>. <br>
+
+					The preprocessed datasets including R-scripts for preprocessing can be found in our GitHub repository.   
+					
+			</div>
 
 			</div>
 		</div>
 		
 		<!-- Container (Part 2 Section) -->
-		<div id="part2" class="container-fluid bg-grey">
+		<div id="part1" class="container-fluid bg-grey">
 			<div class="row">
 
 			<div class="col-sm-6">
-					<h2>Incidents in Numbers</h2>
+					<h2>Service Requests in numbers</h2>
 					
-						<strong>For starters, we examine the total amount of complaints in the five different boroughs without considering time and geographical place of the reported incident. To the right a barplot that shows the amount of complaints in each of the five boroughs. It is noted that there has been the highest number of complaint incidents in Brooklyn and Queens. This may however be due to a larger number of inhabitants in these boroughs. Therefore, the amount of complaint incidents has been normalized using the population numbers from 2016 found at <a href="https://www.citypopulation.de/php/usa-newyorkcity.php">City Population</a>. The normalization has been done by dividing the number of incidents with the population number in millions. Using the dropdown menu, the can be switched to displaying the normalized data. Additionally, the bars in the plots can be hovered to see all the informations at once. In the normalized data there does not seem to be a clear difference in the number of complaint incidents, hence further analysis is needed to draw any conclusions.  </strong> 
+						<strong>For starters, we examine the total amount of service requests in the five different boroughs without considering time and geographical place of the reported incidents. To the right a barplot that shows the amount of service requests in each of the five boroughs is depicted. It is noted that there has been the highest number of service requests in Brooklyn and Queens. This may however be due to a larger number of inhabitants in these boroughs. Therefore, the amount of complaint incidents has been normalized using the population numbers from 2016 found at <a href="https://www.citypopulation.de/php/usa-newyorkcity.php">City Population</a>. The normalization has been done by dividing the number of incidents with the population number in millions. Using the dropdown menu, the data can be switched to displaying the normalized data. Additionally, the bars in the plots can be hovered to see all the informations at once. In the normalized data there does not seem to be a clear difference in the number of service requests, hence further analysis is needed to draw any conclusions.  </strong> 
 						
 				</div>
 
@@ -262,10 +248,7 @@
 								<li><a id="Normalized">Normalized</a></li>
 							</ul>
 						</div>
-						<!-- <div id="tooltip" class="hidden">
-							<p>Year: <span id="year">0</span></p>
-							<p>Time: <span id="time">0</span></p>
-						</div> -->
+						
 					</div>
 				</div>
 
@@ -275,7 +258,7 @@
 
 
 		<!-- Container (Part 3 Section) -->
-		<div id="part3" class="container-fluid">
+		<div id="part2" class="container-fluid">
 			<div class="row">
 				<div class="col-sm-6">
 
@@ -283,45 +266,71 @@
 		            <input name= "aniButton"
 		            type="button"
 		            value="Animate"
-		            style= "width:90px; height:40px; color:steelblue;
-		                   background:aliceblue; font-weight:900;
-		                   border-color:whitesmoke; border-radius:6px;
+		            style= "width:90px; height:40px; color:white;
+		                   background:#f4511e; font-weight:900;
+		                   border-color:#f4511e; border-radius:6px;
 		                   position:relative;top:50%;left:47%;margin-top:14px;bottom:0"
 		            />
 
 		            </div>
 
 		            <div id="brushplot">
-				        <!-- <script type=text/javascript src="http://d3js.org/topojson.v0.min.js"></script> -->
-				        <!-- <script type="text/javascript" src="js/brush.js"></script> -->
 			        </div>
 
 				</div>
 
 				<div class="col-sm-6">
-					<h2>Part 2: Vizualizing incidents in 2015 over time</h2>
-					<strong> The data illustrated in Figure 1 is a random sample of the data obtained <a href="https://data.cityofnewyork.us/Social-Services/311-Service-Requests-2015/hemm-82xw">here</a>. The data contains service requests for various incidents for inhabitants in New York. The bar chart in Figure 1 depicts the number of service requests per day in 2015 based on the sample. The map illustrates where the request have been called in.
-
+					<h2>Visualizing incidents in 2015 over time</h2>
+					<strong> In this section we consider the data from above over time. The figure to the left depicts the the service requests from 2015 each day. The barplot can be brushed to illustrate the geo-locations of service requests called in for a desired number of days in the geoplot illustrating the five boroughs of NYC below the barplot. Press the animate button to see the service requests running each month from January to december 2015. <br>
+					Note that there are predominantly more service requests called in from July to December than from January to June. Also note that the number of service requests are vastly fewer in Staten Island than in the other boroughs, but this is expected, as the population is much smaller here than in the other boroughs - refer to the barplot in the Service Request section. <br>
+					Furthermore, it is worth noting, that the data is a random sample from the original data, thus the data in the figure might not be completely representative for the total data. 
 					 </strong>
 					</div>
 				
 			</div>
 		</div>
-
-		<div id='part4' class='container-fluid bg-grey'> 
+		<div id='part3' class='container-fluid bg-grey'> 
 			<div class='row'> 
 				<div class='col-sm-6'> 
-					<h2>Correlation between Boroughs and Complaint Types</h2>
-					<strong> Instead of looking at the totalt amount of incidents, the different type of incidents could be examined further. Say for instance that a family wants to move to New York City but they are particularly scared of certain incidents such as assault or drug abuse. For that family it would be nice to know whether a certain borough has a smaller amount of incidents related to these categories than the other boroughs. The figure to the right illustrates the correlation between the boroughs, the incidence descriptions and the legal category. As the visualization illustrates, there does not seem to be any correlation between the boroughs and the description or the category of the reported incidents, hence we cannot solely examine the correlations between the boroughs and the incidence categories.   </strong>
+					<h2>NYPD Complaints in Boroughs</h2><br>
+					<strong> We now consider the number of complaints called in to the NYPD in NYC from 1967 to 2017. The figure to the right depicts the five boroughs of NYC. Hover over each borough to see the number of felonies, misdemeanors, violations and total complaints in the given borough since 1967. According to the dataset there have been 468,761 total complaints to the NYPD in NYC since 1967. <br>
+						Note that Brooklyn has the largest number of complaints and Staten Island has the lowest number of complaints. Again, this is foreseeable as the population in Staten Island is much smaller than in the other boroughs. <br> 
+						Looking at each type of complaint we see that 55% of all complaints are of type <i>Misdemeanor</i>, 14% is of type <i>Violation</i> and 31% is of type <i>Felony</i>. Misdemeanors are considered minor legal offenses, violations are considered offenses such as harassments and felonies are considered serious legal offenses. <br>
+						Finally, considering the number of legal offenses normalized with respect to the population in each of the boroughs, Bronx has the highest normalized legal offenses of 7% and Queens has the lowest of 3.8%. Note that the normalized legal offenses are normalized with respect to the number of inhabitants in 2016.
+
+					</strong>
 				</div>
+				<div class='col-sm-6'>
+					<div id="geoviz"></div>
+				</div>
+			</div>
+
+		</div>
 
 
+		<div id='part4' class='container-fluid'> 
 			<div class='row'> 
+
+				<div class='row'> 
 				<div class='col-sm-6'> 
 					
 					<!-- Add whitespace to the left of embedded plot -->
-					&emsp; &emsp; &emsp;&emsp;&emsp; &emsp;&emsp;&emsp;&emsp;&emsp; <embed src="Borough_LawCat_Corr.pdf#view=FitH" width="700" height="700">
+					<embed src="Borough_LawCat_Corr.pdf#view=FitH" width="700" height="700">
 
+				</div>
+
+
+				<div class='col-sm-6'> 
+					<h2>Correlation between Boroughs and Complaint Types</h2>
+					<strong> Instead of looking at the totalt amount of incidents, the correlation between legal offense and borough can be examined. Say for instance that a family wants to move to New York City but they are particularly scared of certain incidents such as assault or drug abuse. For that family it would be nice to know whether a certain borough has a smaller amount of incidents related to these categories than the other boroughs. The figure to the left illustrates the correlation between the boroughs, the incidence descriptions (represented using their complaint ids) and the legal category. As the visualization illustrates, there is an obvious correlation between complaint type and legal category, as similar legal offenses tend to belong to the same categories. Meanwhile, there does not seem to be any correlation between the boroughs and the description or the category of the reported incidents, hence we cannot conclude that there is a correlation between borough and the type of legal offenses that happen.   </strong>
+					<br> <br>
+					<h2>Conclusion</h2>
+					<strong>We have found that the normalized number of service request are predominantly the same in each borough of NYC. Manhattan have the highest number of normalized service requests, and Staten Island has the lowest. 
+					<br>
+					Considering legal offenses, there seems to be no significant difference in the distribution of the diffferent types between the boroughs. However, the total normalized legal offenses in each of the boroughs, Bronx have almost twice as many as Queens. 
+					<br>
+					Therefore, if you are looking to avoid legal offenses, you should consider going to Queens and if you are looking to stay where the living environment requieres the least amount of service, you should consider going to Staten Island. 
+					  </strong>
 				</div>
 
 			</div>
@@ -330,7 +339,7 @@
 	</div>
 				
 		<!-- Container (Footer Section) -->
-		<footer class="container-fluid text-center">
+		<footer class="container-fluid bg-grey text-center">
 			<a href="#myPage" title="To Top">
 			<span class="glyphicon glyphicon-chevron-up"></span>
 			</a>
@@ -341,6 +350,7 @@
 <!-- PLOTS -->
 <script src="js/barplot.js"></script>
 <script src="js/brushplot.js"></script>
+<script src="js/geoplot.js"></script>
 
 
 </body>
