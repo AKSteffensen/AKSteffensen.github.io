@@ -1,4 +1,4 @@
 # AKSteffensen.github.io
-Social Data Analysis Project 2018 - Quality of Life in New York City
-- Kasper Schjødt-Hansen, s134578
-- Andreas Kjer Steffensen, s134599
+Social Data Analysis Project 2018 -Neighborhood Complaints in NYC
+- Kasper Schjødt-Hansen
+- Andreas Kjer Steffensen
